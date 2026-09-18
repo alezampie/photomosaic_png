@@ -223,3 +223,12 @@ __marimo__/
 *.suo
 *.userosscache
 *.sln.docstates
+
+# Various files
+input/video/*
+input/target/*
+
+output/frames/*
+output/segmented/*
+output/tiles/*
+output/mosaic/*

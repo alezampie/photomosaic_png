@@ -12,6 +12,7 @@
     <Name>photomosaic_png</Name>
     <RootNamespace>photomosaic_png</RootNamespace>
     <InterpreterId>MSBuild|venv|$(MSBuildProjectFullPath)</InterpreterId>
+    <IsWindowsApplication>False</IsWindowsApplication>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -22,7 +23,19 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="mosaic\matcher.py" />
+    <Compile Include="mosaic\renderer.py" />
+    <Compile Include="mosaic\__init__.py" />
     <Compile Include="photomosaic_png.py" />
+    <Compile Include="segmentation\background_removal.py" />
+    <Compile Include="segmentation\__init__.py" />
+    <Compile Include="target\grid.py" />
+    <Compile Include="target\__init__.py" />
+    <Compile Include="tiles\normalize.py" />
+    <Compile Include="tiles\__init__.py" />
+    <Compile Include="video\sampler.py" />
+    <Compile Include="video\sharpness.py" />
+    <Compile Include="video\__init__.py" />
   </ItemGroup>
   <ItemGroup>
     <Interpreter Include="venv\">
@@ -34,6 +47,29 @@
       <PathEnvironmentVariable>PYTHONPATH</PathEnvironmentVariable>
       <Architecture>X64</Architecture>
     </Interpreter>
+    <Interpreter Include="venv_sam2\">
+      <Id>venv_sam2</Id>
+      <Version>3.12</Version>
+      <Description>venv_sam2 (Python 3.12 (64-bit))</Description>
+      <InterpreterPath>Scripts\python.exe</InterpreterPath>
+      <WindowsInterpreterPath>Scripts\pythonw.exe</WindowsInterpreterPath>
+      <PathEnvironmentVariable>PYTHONPATH</PathEnvironmentVariable>
+      <Architecture>X64</Architecture>
+    </Interpreter>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="input\" />
+    <Folder Include="input\target\" />
+    <Folder Include="input\video\" />
+    <Folder Include="mosaic\" />
+    <Folder Include="segmentation\" />
+    <Folder Include="output\frames\" />
+    <Folder Include="output\mosaic\" />
+    <Folder Include="output\tiles\" />
+    <Folder Include="target\" />
+    <Folder Include="tiles\" />
+    <Folder Include="video\" />
+    <Folder Include="output\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
