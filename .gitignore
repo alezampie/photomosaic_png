@@ -232,3 +232,5 @@ output/frames/*
 output/segmented/*
 output/tiles/*
 output/mosaic/*
+
+output/target/*

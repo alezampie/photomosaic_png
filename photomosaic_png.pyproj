@@ -30,6 +30,7 @@
     <Compile Include="segmentation\background_removal.py" />
     <Compile Include="segmentation\__init__.py" />
     <Compile Include="target\grid.py" />
+    <Compile Include="target\orientation.py" />
     <Compile Include="target\__init__.py" />
     <Compile Include="tiles\normalize.py" />
     <Compile Include="tiles\__init__.py" />
@@ -62,6 +63,7 @@
     <Folder Include="input\target\" />
     <Folder Include="input\video\" />
     <Folder Include="mosaic\" />
+    <Folder Include="output\target\" />
     <Folder Include="segmentation\" />
     <Folder Include="output\frames\" />
     <Folder Include="output\mosaic\" />

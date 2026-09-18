@@ -1,23 +1,43 @@
 from PIL import Image
 
 
-def normalize_image(image, size=512):
+def normalize_image(image, size=512, margin=0.05):
     """
-    Porta un'immagine dentro un canvas quadrato mantenendo
-    le proporzioni originali.
+    Porta il soggetto dentro un canvas quadrato.
 
-    L'immagine viene ridimensionata fino a stare completamente
-    dentro il canvas e poi viene centrata.
+    Il soggetto viene individuato tramite il canale alpha,
+    ritagliato dalla trasparenza circostante e ingrandito
+    fino a occupare quasi tutto il canvas.
+
+    Le proporzioni e l'inclinazione originale vengono mantenute.
     """
 
     image = image.convert("RGBA")
 
+    alpha = image.getchannel("A")
+
+    bbox = alpha.getbbox()
+
+    if bbox is None:
+        return Image.new(
+            "RGBA",
+            (size, size),
+            (0, 0, 0, 0)
+        )
+
+    image = image.crop(bbox)
+
     width, height = image.size
 
-    scale = min(size / width, size / height)
+    available_size = int(size * (1 - margin * 2))
 
-    new_width = int(width * scale)
-    new_height = int(height * scale)
+    scale = min(
+        available_size / width,
+        available_size / height
+    )
+
+    new_width = max(1, int(width * scale))
+    new_height = max(1, int(height * scale))
 
     image = image.resize(
         (new_width, new_height),
