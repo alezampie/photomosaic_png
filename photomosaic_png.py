@@ -13,7 +13,7 @@ from mosaic.renderer import load_tiles, render_mosaic
 from target.orientation import calculate_orientation
 
 
-RUN_PREPROCESSING = True
+RUN_PREPROCESSING = False
 
 
 video_path = Path("input/video/video.mp4")
@@ -69,12 +69,12 @@ if RUN_PREPROCESSING:
 
     frames = sample_video(
         video_path,
-        90
+        150
     )
 
     selected_frames = select_sharpest_frames(
         frames,
-        30
+        50
     )
 
     print(
@@ -196,14 +196,28 @@ print(
 print()
 print("Calcolo della griglia...")
 
-columns = 40
-rows = 40
+columns = 50
+rows = 50
 
 cells = calculate_grid(
     target,
     columns,
     rows
 )
+
+print()
+print("Orientamento del target:")
+
+for cell in cells:
+
+    if cell["orientation"] is None:
+        continue
+
+    print(
+        f"Riga {cell['row']}, "
+        f"colonna {cell['column']} -> "
+        f"{cell['orientation']:.1f} gradi"
+    )
 
 print(
     f"Celle totali: {len(cells)}"
@@ -227,9 +241,18 @@ print(
 
 
 print()
-print("Prime celle con soggetto:")
+print(
+    "Prime celle con soggetto:"
+)
 
 for cell in subject_cells[:10]:
+
+    if cell["orientation"] is None:
+        orientation_text = "non disponibile"
+    else:
+        orientation_text = (
+            f"{cell['orientation']:.1f} gradi"
+        )
 
     print(
         f"Riga {cell['row']}, "
@@ -237,9 +260,8 @@ for cell in subject_cells[:10]:
         f"soggetto {cell['subject_ratio']:.1%}, "
         f"colore {cell['color']}, "
         f"orientamento "
-        f"{cell['orientation']:.1f} gradi"
+        f"{orientation_text}"
     )
-
 
 # Matching
 
