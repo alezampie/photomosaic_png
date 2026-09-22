@@ -1,7 +1,7 @@
 from pathlib import Path
 import random
 
-from PIL import Image
+from PIL import Image, ImageChops
 
 from .matcher import recolor_tile
 from target.orientation import calculate_orientation
@@ -76,6 +76,9 @@ def render_mosaic(
     - applica una variazione casuale alla posizione;
     - ridimensiona la tile;
     - la sovrappone alle altre tile.
+
+    Alla fine il collage viene ritagliato usando
+    l'alpha dell'immagine target scontornata.
     """
 
     target = target.convert("RGBA")
@@ -199,5 +202,19 @@ def render_mosaic(
             tile,
             (int(x), int(y))
         )
+
+    # Ritaglia il collage usando l'alpha del target
+
+    target_alpha = target.getchannel("A")
+    mosaic_alpha = output.getchannel("A")
+
+    clipped_alpha = ImageChops.multiply(
+        mosaic_alpha,
+        target_alpha
+    )
+
+    output.putalpha(
+        clipped_alpha
+    )
 
     return output

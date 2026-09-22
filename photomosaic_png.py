@@ -196,8 +196,8 @@ print(
 print()
 print("Calcolo della griglia...")
 
-columns = 50
-rows = 50
+columns = 25
+rows = 25
 
 cells = calculate_grid(
     target,
