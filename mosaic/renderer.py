@@ -59,10 +59,11 @@ def render_mosaic(
     target,
     cells,
     tiles,
-    tile_scale=3,
+    tile_scale=3.25,
     scale_randomness=0.15,
     position_randomness=0.15,
-    rotation_randomness=8
+    rotation_randomness=8,
+    orientation_mode="target"
 ):
     """
     Genera la photomosaic.
@@ -112,28 +113,44 @@ def render_mosaic(
 
         # Orientamento
 
-        target_orientation = cell["orientation"]
+        if orientation_mode == "random":
 
-        if (
-            target_orientation is not None
-            and tile_orientation is not None
-        ):
-
-            rotation = (
-                target_orientation
-                - tile_orientation
+            rotation = random.uniform(
+                -180,
+                180
             )
 
-            rotation += random.uniform(
-                -rotation_randomness,
-                rotation_randomness
-            )
+        else:
 
-            tile = tile.rotate(
-                rotation,
-                resample=Image.Resampling.BICUBIC,
-                expand=True
-            )
+            target_orientation = cell["orientation"]
+
+            if (
+                target_orientation is not None
+                and tile_orientation is not None
+            ):
+
+                rotation = (
+                    target_orientation
+                    - tile_orientation
+                )
+
+                rotation += random.uniform(
+                    -rotation_randomness,
+                    rotation_randomness
+                )
+
+            else:
+
+                rotation = random.uniform(
+                    -rotation_randomness,
+                    rotation_randomness
+                )
+
+        tile = tile.rotate(
+            rotation,
+            resample=Image.Resampling.BICUBIC,
+            expand=True
+        )
 
         # Scala casuale
 

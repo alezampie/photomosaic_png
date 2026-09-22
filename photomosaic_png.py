@@ -15,6 +15,8 @@ from target.orientation import calculate_orientation
 
 RUN_PREPROCESSING = False
 
+ORIENTATION_MODE = "random" #target or random
+
 
 video_path = Path("input/video/video.mp4")
 
@@ -196,8 +198,8 @@ print(
 print()
 print("Calcolo della griglia...")
 
-columns = 25
-rows = 25
+columns = 30
+rows = 30
 
 cells = calculate_grid(
     target,
@@ -299,7 +301,8 @@ print("Generazione della photomosaic...")
 mosaic = render_mosaic(
     target,
     cells,
-    tiles
+    tiles,
+    orientation_mode=ORIENTATION_MODE
 )
 
 
